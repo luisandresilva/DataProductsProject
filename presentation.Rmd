@@ -1,0 +1,55 @@
+---
+title: "Developing Data Products Project"
+author: "Luis Andre Dutra e Silva"
+date: "3/29/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(shiny)
+library(shinyBS)
+```
+
+## Summary
+
+This Shiny project renders an interactive 3D scattered graph using Plotly. All datasets are available to the user in order to choose the axis on the fly.
+
+- Interface is completely reactive
+- Popovers are available to explain each element
+
+
+## Example Code
+
+- The following code retrives the second dataset in the list of R default datasets: 
+```{r cars, echo = TRUE}
+names <- names(data())
+res <- data()$results
+res <- data.frame(res)
+res <- res[res$Package=="datasets",]
+res <- res[order(res$Item),]
+datasets <- res$Item
+name <- as.character(datasets[1])
+data(list=name)
+eval(parse(text=paste("dataset <- ",name)))
+ds <- data.frame(dataset)
+ds
+```
+
+## Slide with Plot
+
+- The folowing chart is rendered with the previous dataset
+```{r pressure}
+
+p <- plot_ly(ds, x = ~cov.general, y = ~cov.picture, z = ~cov.blocks, color =~cov.maze, colors = c('#BF382A', '#0C4B8E')) %>%
+                    add_markers() %>%
+                    layout(scene = list(xaxis = list(title = "cov.general"),
+                                        yaxis = list(title = "cov.picture"),
+                                        zaxis = list(title = "cov.blocks")))
+p
+```
+
+## Conclusion
+
+The tools used in this course are very useful for the purpose of distributing the result of a data analysis research project. I think that the professionalism of each tool is what sets this specialization apart.
